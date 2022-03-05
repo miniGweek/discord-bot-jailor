@@ -11,7 +11,7 @@ client = discord.Client()
 
 patterns = ['There are (.+?)/2 guild saves left.',
             'Guild Saves: \*\*(.+?)/2\*\*',
-            'for a total of (.+?)/2 guild saves.'
+            'for a total of `(.+?)/2` guild saves.'
             ]
 
 
