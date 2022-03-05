@@ -32,7 +32,8 @@ jobs:
           LINODE_CLI_TOKEN: ${{ secrets.LINODE_CLI_TOKEN }}
 
       - name: Linode firewall rules - test
-        run: linode-cli firewalls rules-list 50400
+        run: |
+          .\linode-firewall-rules-update.sh
 
       # - name: Install SSH key
       #   uses: shimataro/ssh-key-action@v2
