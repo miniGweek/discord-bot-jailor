@@ -26,32 +26,40 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
+      - name: Setup Linode cli
+        uses: brendon1555/setup-linode-cli@master
         with:
-          key: ${{ secrets.LINODE_JAILOR_SSH_PRIVATE_KEY }}
-          name: id_rsa
-          known_hosts: 'just a place holder for now'
+          LINODE_CLI_TOKEN: ${{ secrets.LINODE_CLI_TOKEN }}
 
-      - name: Adding Known Hosts
-        run: |
-          ssh-keyscan -H ${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }} >> ~/.ssh/known_hosts
+      - name: Linode firewall rules - test
+        run: linode-cli firewalls rules-list 50400
 
-      - name: Copy and deploy source
-        run: |
-          echo "Start - Copy and Deploy"
+      # - name: Install SSH key
+      #   uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ secrets.LINODE_JAILOR_SSH_PRIVATE_KEY }}
+      #     name: id_rsa
+      #     known_hosts: 'just a place holder for now'
 
-          host=${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }}
-          remotehostuser="root@$host"
+      # - name: Adding Known Hosts
+      #   run: |
+      #     ssh-keyscan -H ${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }} >> ~/.ssh/known_hosts
 
-          remotehostwithlocation="$remotehostuser:/staging"
+      # - name: Copy and deploy source
+      #   run: |
+      #     echo "Start - Copy and Deploy"
 
-          echo "Uploading files to $remotehostwithlocation"
+      #     host=${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }}
+      #     remotehostuser="root@$host"
 
-          scp -i /home/runner/.ssh/id_rsa main.py update_deployment.sh discord-bot-jailor.conf $remotehostwithlocation
+      #     remotehostwithlocation="$remotehostuser:/staging"
 
-          echo "SSH into remote server and run update_deployment.sh"
+      #     echo "Uploading files to $remotehostwithlocation"
 
-          ssh -i /home/runner/.ssh/id_rsa $remotehostuser 'chmod +x /staging/update_deployment.sh && /staging/update_deployment.sh'
+      #     scp -i /home/runner/.ssh/id_rsa main.py update_deployment.sh discord-bot-jailor.conf $remotehostwithlocation
 
-          echo "End - Copy and Deploy"
+      #     echo "SSH into remote server and run update_deployment.sh"
+
+      #     ssh -i /home/runner/.ssh/id_rsa $remotehostuser 'chmod +x /staging/update_deployment.sh && /staging/update_deployment.sh'
+
+      #     echo "End - Copy and Deploy"
