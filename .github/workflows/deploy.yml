@@ -19,6 +19,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-20.04
+    environment: Production
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -29,8 +30,14 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.LINODE_JAILOR_SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }}
+
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo ssh ing into the remote server and running hello
+          ssh "root@${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }}" 'hello world'
