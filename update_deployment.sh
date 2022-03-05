@@ -3,7 +3,7 @@ source /etc/profile
 
 timestamp=$(date +"%d%m%Y_%H%M%S");
 echo "$timestamp"
-echo "$DISCORD_BOT_JAILOR_TOKEN"
+# echo "$DISCORD_BOT_JAILOR_TOKEN"  
 supervisorctl stop all
 echo "stopped supervisorctl"
 
