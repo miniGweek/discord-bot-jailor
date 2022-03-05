@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ main, feature/test-linode-cli-script ]
   pull_request:
     branches: [ main ]
 
@@ -33,7 +33,7 @@ jobs:
 
       - name: Linode firewall rules - test
         run: |
-          .\linode-firewall-rules-update.sh
+          linode-firewall-rules-update.sh
 
       # - name: Install SSH key
       #   uses: shimataro/ssh-key-action@v2
