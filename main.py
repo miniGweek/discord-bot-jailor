@@ -9,6 +9,11 @@ logging.warning('This will get logged to a file')
 
 client = discord.Client()
 
+patterns = ['There are (.+?)/2 guild saves left.',
+            'Guild Saves: \*\*(.+?)/2\*\*',
+            'for a total of (.+?)/2 guild saves.'
+            ]
+
 
 @client.event
 async def on_ready():
@@ -26,7 +31,8 @@ async def on_message(message):
     if message.author.bot == False and message.content.startswith('j!'):
         logging.info(
             'jailor debug mode invoked, content passed={0.content}'.format(message))
-        # await message.channel.send('Jailor will be happy to do for you :{0.content}'.format(message))
+
+        await check_send_hello(debug, message)
 
     if debug or (message.author.bot == True and message.author.display_name == 'counting'):
 
@@ -89,16 +95,20 @@ async def unlock_channel(channel):
 
 
 def get_saves(message):
-    pattern1 = re.search('There are (.+?)/2 guild saves left.', message)
-    pattern2 = re.search('Guild Saves: \*\*(.+?)/2\*\*', message)
+    all_none = True
+    for pattern in patterns:
+        search_pattern = re.search(pattern,message)
+        saves_atleast_one = is_saves_atleast_one(search_pattern)
 
-    if pattern1 == None and pattern2 == None:
+        if saves_atleast_one == False:
+            return False
+        if search_pattern != None:
+            all_none = False
+
+
+    if all_none == True:
         return None
 
-    if is_saves_atleast_one(pattern1) == False:
-        return False
-    if is_saves_atleast_one(pattern2) == False:
-        return False
     return True
 
 
@@ -113,8 +123,10 @@ def is_saves_atleast_one(pattern):
 
 
 def get_counting_channel(message):
-    channel_to_check = '💴-♧-counting'  # 'counting'
-    #channel_to_check='😇-♤-chat' #
+    channel_to_check = '💴-♧-counting'
+    # channel_to_check='😇-♤-chat'
+    # channel_to_check = 'counting'
+
     channels = message.guild.channels
     for channel in channels:
         if channel.name == channel_to_check:
@@ -133,6 +145,10 @@ def can_send_messages(channel):
     send_messages_permission = current_permissions.send_messages
     return send_messages_permission
 
+async def check_send_hello(debug,message):
+    if debug and 'j!debug print ' in message.content:
+        printcontent = message.content.split('j!debug print ')[1]
+        await message.channel.send('Good bot jailor says :{0}'.format(printcontent))
 
 discord_bot_token = os.getenv('DISCORD_BOT_JAILOR_TOKEN')
 client.run(discord_bot_token)

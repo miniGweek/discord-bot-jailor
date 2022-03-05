@@ -35,3 +35,5 @@ j!debug There are 0.8/2 guild saves left.
 j!debug There are 1.0/2 guild saves left.
 
 j!debug There are 1.2/2 guild saves left.
+
+j!debug for a total of 1.6/2 guild saves.
