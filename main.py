@@ -22,7 +22,7 @@ async def on_message(message):
     debug = message.content.startswith('j!debug')
     if message.author.bot == False and message.content.startswith('j!'):
         logging.info('jailor debug mode invoked, content passed={0.content}'.format(message))
-        await message.channel.send('Jailor will be happy to do for you :{0.content}'.format(message))
+        # await message.channel.send('Jailor will be happy to do for you :{0.content}'.format(message))
 
     if debug or (message.author.bot == True and message.author.display_name == 'counting'):
         
@@ -44,7 +44,7 @@ async def check_saves_and_lock_channel(message, counting_message):
 
     logging.info('jailor initiating check if guildsaves are there')
     check_saves = get_saves(counting_message)
-    counting_channel=get_counting_channel(message)
+    counting_channel = get_counting_channel(message)
     logging.info('jailor result of check if guildsaves are there={0}'.format(check_saves))
     if check_saves == False:
         logging.info('jailor checked guild saves are not >=1, locking channel'.format(check_saves))        
@@ -53,7 +53,9 @@ async def check_saves_and_lock_channel(message, counting_message):
     elif check_saves == True:
         logging.info('jailor checked guild saves are >=1, un-locking channel'.format(check_saves))
         await unlock_channel(counting_channel)
-        logging.info('jailor un-locking channel done')        
+        logging.info('jailor un-locking channel done')       
+    elif check_saves == None:
+         logging.info("jailor didn't evaluate guild saves, won't change anything")
             
 
 def get_role(roles,name):
@@ -73,7 +75,14 @@ def get_saves(message):
     pattern1=re.search('There are (.+?)/2 guild saves left.',message)
     pattern2=re.search('Guild Saves: \*\*(.+?)/2\*\*',message)
 
-    return is_saves_atleast_one(pattern1) or is_saves_atleast_one(pattern2)
+    if pattern1 == None and pattern2 == None:
+        return None
+
+    if is_saves_atleast_one(pattern1) == False:
+        return False
+    if is_saves_atleast_one(pattern2) == False:
+        return False
+    return True
 
 def is_saves_atleast_one(pattern):
     if pattern:
@@ -83,12 +92,9 @@ def is_saves_atleast_one(pattern):
             return True
         else:
             return False
-    else:
-        return False
-
 
 def get_counting_channel(message):
-    channel_to_check='💴-♧-counting'
+    channel_to_check='💴-♧-counting' # 'counting' 
     #channel_to_check='😇-♤-chat' #
     channels=message.guild.channels;
     for channel in channels:
