@@ -3,7 +3,7 @@ import logging
 import re
 import os
 
-logging.basicConfig(filename='jailor.log', filemode='w', level=logging.INFO, format='%(asctime)s %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='jailor.log', filemode='a', level=logging.INFO, format='%(asctime)s %(name)s - %(levelname)s - %(message)s')
 logging.warning('This will get logged to a file')
 
 client = discord.Client()
@@ -44,12 +44,16 @@ async def check_saves_and_lock_channel(message, counting_message):
 
     logging.info('jailor initiating check if guildsaves are there')
     check_saves = get_saves(counting_message)
+    counting_channel=get_counting_channel(message)
     logging.info('jailor result of check if guildsaves are there={0}'.format(check_saves))
     if check_saves == False:
-        logging.info('jailor checked guild saves are not >=1, locking channel'.format(check_saves))
-        counting_channel=get_counting_channel(message)
+        logging.info('jailor checked guild saves are not >=1, locking channel'.format(check_saves))        
         await lock_channel(counting_channel)
         logging.info('jailor locking channel done')
+    elif check_saves == True:
+        logging.info('jailor checked guild saves are >=1, un-locking channel'.format(check_saves))
+        await unlock_channel(counting_channel)
+        logging.info('jailor un-locking channel done')        
             
 
 def get_role(roles,name):
@@ -58,8 +62,12 @@ def get_role(roles,name):
             return role
 
 async def lock_channel(channel):
-    await channel.send('Guild saves are 0. Locking channel')
+    await channel.send('Guild saves are less than 1. Locking channel')
     await channel.set_permissions(get_role(channel.guild.roles, '@everyone'), send_messages=False)
+
+async def unlock_channel(channel):
+    await channel.send('Guild saves are at-least 1. Unlocking channel')
+    await channel.set_permissions(get_role(channel.guild.roles, '@everyone'), send_messages=True)
 
 def get_saves(message):
     pattern1=re.search('There are (.+?)/2 guild saves left.',message)
