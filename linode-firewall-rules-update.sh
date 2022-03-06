@@ -66,7 +66,6 @@ if [ "$1" == "addgithub-pip" ]; then
 ]
 EOM
 
-    echo "$firewall_rules_inbound"
 elif [ "$1" == "removegithub-pip" ]; then
     read -r -d '' firewall_rules_inbound <<EOM
     [
@@ -82,4 +81,4 @@ linode-cli firewalls rules-update 50400 \
 
 echo "Sleeping for 5s, allowing firewall rules to take effect"
 
-sleep 5
+sleep 10
