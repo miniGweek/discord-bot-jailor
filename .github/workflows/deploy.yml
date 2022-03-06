@@ -26,6 +26,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Setup Linode cli
+        uses: brendon1555/setup-linode-cli@master
+        with:
+          LINODE_CLI_TOKEN: ${{ secrets.LINODE_CLI_TOKEN }}
+
+      - name: Firewall rules - add github pip and home pip
+        shell: bash
+        run: |
+          chmod +x linode-firewall-rules-update.sh
+
+          ./linode-firewall-rules-update.sh "addgithub-pip"
+
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
@@ -35,9 +47,11 @@ jobs:
 
       - name: Adding Known Hosts
         run: |
+          curl -l http://checkip.amazonaws.com/
           ssh-keyscan -H ${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }} >> ~/.ssh/known_hosts
 
       - name: Copy and deploy source
+        shell: bash
         run: |
           echo "Start - Copy and Deploy"
 
@@ -55,3 +69,10 @@ jobs:
           ssh -i /home/runner/.ssh/id_rsa $remotehostuser 'chmod +x /staging/update_deployment.sh && /staging/update_deployment.sh'
 
           echo "End - Copy and Deploy"
+
+      - name: Firewall rules - remove github pip and add home pip
+        shell: bash
+        run: |
+          chmod +x linode-firewall-rules-update.sh
+
+          ./linode-firewall-rules-update.sh "removegithub-pip"
