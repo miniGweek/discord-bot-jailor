@@ -35,7 +35,7 @@ jobs:
         shell: bash
         run: |
           chmod +x linode-firewall-rules-update.sh
-          cat linode-firewall-rules-update.sh
+
           ./linode-firewall-rules-update.sh
 
       # - name: Install SSH key

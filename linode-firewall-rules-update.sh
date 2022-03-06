@@ -20,7 +20,7 @@ echo $publicip_json
         "description": "Allow inbound ssh from github actions pipeline",
         "addresses": {
             "ipv4": [
-                "192.0.2.1/32"
+                $publicip_json
             ]
         }
     },
@@ -39,6 +39,8 @@ echo $publicip_json
 ]
 EOM
 
+
+echo "$firewall_rules_inbound"
 
 linode-cli firewalls rules-update 50400 \
 --inbound "$firewall_rules_inbound"
