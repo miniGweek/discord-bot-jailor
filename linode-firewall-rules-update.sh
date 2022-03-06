@@ -81,4 +81,4 @@ linode-cli firewalls rules-update 50400 \
 
 echo "Sleeping for 5s, allowing firewall rules to take effect"
 
-sleep 10
+sleep 20

@@ -47,7 +47,6 @@ jobs:
 
       - name: Adding Known Hosts
         run: |
-          curl -l http://checkip.amazonaws.com/
           ssh-keyscan -H ${{ secrets.LINODE_JAILOR_KNOWN_HOSTS }} >> ~/.ssh/known_hosts
 
       - name: Copy and deploy source
