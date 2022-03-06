@@ -33,7 +33,8 @@ jobs:
 
       - name: Linode firewall rules - test
         run: |
-          linode-firewall-rules-update.sh
+          chmod +x linode-firewall-rules-update.sh
+          .\linode-firewall-rules-update.sh
 
       # - name: Install SSH key
       #   uses: shimataro/ssh-key-action@v2
