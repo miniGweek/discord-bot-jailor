@@ -42,12 +42,22 @@ read -r -d '' json_home_publicip_rule <<EOM
     }
 EOM
 
-read -r -d '' firewall_rules_inbound <<EOM
+if [ "$1" == "addgithub-pip" ]; then
+    read -r -d '' firewall_rules_inbound <<EOM
 [
     $json_github_action_publicip_rule, 
     $json_home_publicip_rule
 ]
 EOM
+
+    echo "$firewall_rules_inbound"
+elif [ "$1" == "removegithub-pip" ]; then
+    read -r -d '' firewall_rules_inbound <<EOM
+    [
+    $json_home_publicip_rule
+    ]
+EOM
+fi
 
 linode-cli firewalls rules-update 50400 \
     --inbound "$firewall_rules_inbound" \

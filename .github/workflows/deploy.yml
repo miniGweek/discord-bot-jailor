@@ -31,12 +31,19 @@ jobs:
         with:
           LINODE_CLI_TOKEN: ${{ secrets.LINODE_CLI_TOKEN }}
 
-      - name: Linode firewall rules - test
+      - name: Linode firewall rules - add github pip and home pip
         shell: bash
         run: |
           chmod +x linode-firewall-rules-update.sh
 
-          ./linode-firewall-rules-update.sh
+          ./linode-firewall-rules-update.sh "addgithub-pip"
+
+      - name: Linode firewall rules - add only home pip
+        shell: bash
+        run: |
+          chmod +x linode-firewall-rules-update.sh
+
+          ./linode-firewall-rules-update.sh "removegithub-pip"
 
       # - name: Install SSH key
       #   uses: shimataro/ssh-key-action@v2
