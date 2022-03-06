@@ -36,7 +36,7 @@ jobs:
         run: |
           chmod +x linode-firewall-rules-update.sh
           cat linode-firewall-rules-update.sh
-          linode-firewall-rules-update.sh
+          ./linode-firewall-rules-update.sh
 
       # - name: Install SSH key
       #   uses: shimataro/ssh-key-action@v2
