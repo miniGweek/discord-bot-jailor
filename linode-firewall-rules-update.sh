@@ -42,11 +42,27 @@ read -r -d '' json_home_publicip_rule <<EOM
     }
 EOM
 
+read -r -d '' common_deny_all_inbound_rule <<EOM
+{
+        "action": "DROP",
+        "protocol": "TCP",
+        "ports": "22",
+        "label": "deny-SSH-from-everywhere",
+        "description": "DROP/Deny inbound shh from everywhere else",
+        "addresses": {
+            "ipv4": [
+                "0.0.0.0/0"
+            ]
+        }
+    }
+EOM
+
 if [ "$1" == "addgithub-pip" ]; then
     read -r -d '' firewall_rules_inbound <<EOM
 [
     $json_github_action_publicip_rule, 
-    $json_home_publicip_rule
+    $json_home_publicip_rule,
+    $common_deny_all_inbound_rule
 ]
 EOM
 
@@ -54,7 +70,8 @@ EOM
 elif [ "$1" == "removegithub-pip" ]; then
     read -r -d '' firewall_rules_inbound <<EOM
     [
-    $json_home_publicip_rule
+    $json_home_publicip_rule,
+    $common_deny_all_inbound_rule
     ]
 EOM
 fi
