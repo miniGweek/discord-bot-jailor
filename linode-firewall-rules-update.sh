@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "Updating linode firewall rules"
 
