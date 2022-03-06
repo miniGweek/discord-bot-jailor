@@ -6,9 +6,11 @@ echo "Updating linode firewall rules"
 
 github_action_publicip=$(curl -l http://checkip.amazonaws.com/)
 
-echo $github_action_publicip
-publicip_json="\""$github_action_publicip"\""
-echo $publicip_json
+echo "Github action pipeline runner public ip is : $github_action_publicip"
+
+publicip_in_json_acceptable_format="\""$github_action_publicip"/32\""
+
+echo "Github action pipeline runner public ip in /32 format is : $publicip_in_json_acceptable_format"
 
  read -r -d '' firewall_rules_inbound << EOM
 [
@@ -20,7 +22,7 @@ echo $publicip_json
         "description": "Allow inbound ssh from github actions pipeline",
         "addresses": {
             "ipv4": [
-                $publicip_json
+                $publicip_in_json_acceptable_format
             ]
         }
     },
@@ -39,8 +41,6 @@ echo $publicip_json
 ]
 EOM
 
-
-echo "$firewall_rules_inbound"
-
 linode-cli firewalls rules-update 50400 \
---inbound "$firewall_rules_inbound"
+--inbound "$firewall_rules_inbound" \
+ --json --pretty
