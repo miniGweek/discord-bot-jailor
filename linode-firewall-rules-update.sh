@@ -79,3 +79,7 @@ fi
 linode-cli firewalls rules-update 50400 \
     --inbound "$firewall_rules_inbound" \
     --json --pretty
+
+echo "Sleeping for 5s, allowing firewall rules to take effect"
+
+sleep 5
