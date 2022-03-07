@@ -9,7 +9,7 @@ logging.warning('This will get logged to a file')
 
 client = discord.Client()
 
-patterns = ['There are (.+?)/2 guild saves left.',
+patterns = ['There are \*\*(.+?)/2\*\* guild saves left.',
             'Guild Saves: \*\*(.+?)/2\*\*',
             'for a total of `(.+?)/2` guild saves.'
             ]

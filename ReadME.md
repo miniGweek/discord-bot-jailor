@@ -25,15 +25,21 @@ export ENV_VAR_KEY=VALUE
 
 You currently have 0/3 saves.
 
-j!debug Guild Saves: **1.0/2**
 
+j!debug Guild Saves: **0.0/2**
 j!debug Guild Saves: **0.4/2**
+j!debug Guild Saves: **1.0/2**
+j!debug Guild Saves: **1.4/2**
+j!debug Guild Saves: **2.0/2**
 
+j!debug There are **0.0/2** guild saves left.
+j!debug There are **0.8/2** guild saves left.
+j!debug There are **1.0/2** guild saves left.
+j!debug There are **1.2/2** guild saves left.
+j!debug There are **2.0/2** guild saves left.
 
-j!debug There are 0.8/2 guild saves left.
-
-j!debug There are 1.0/2 guild saves left.
-
-j!debug There are 1.2/2 guild saves left.
-
-j!debug for a total of 1.6/2 guild saves.
+j!debug for a total of `0.0/2` guild saves.
+j!debug for a total of `0.8/2` guild saves.
+j!debug for a total of `1.0/2` guild saves.
+j!debug for a total of `1.4/2` guild saves.
+j!debug for a total of `2.0/2` guild saves.
