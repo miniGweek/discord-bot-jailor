@@ -175,13 +175,12 @@ async def check_send_hello(debug, message):
 
 
 def convert_string_permissions(permission):
-    match permission:
-        case 'True':
-            return True
-        case 'False':
-            return False
-        case 'None':
-            return None
+    if permission == 'True':
+        return True
+    elif permission == 'False':
+        return False
+    elif permission == 'None':
+        return None
 
 
 discord_bot_token = os.getenv('DISCORD_BOT_JAILOR_TOKEN')
