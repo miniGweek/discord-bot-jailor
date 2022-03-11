@@ -61,7 +61,7 @@ jobs:
 
           echo "Uploading files to $remotehostwithlocation"
 
-          scp -i /home/runner/.ssh/id_rsa main.py update_deployment.sh discord-bot-jailor.conf $remotehostwithlocation
+          scp -i /home/runner/.ssh/id_rsa main.py app_settings.json update_deployment.sh discord-bot-jailor.conf $remotehostwithlocation
 
           echo "SSH into remote server and run update_deployment.sh"
 
