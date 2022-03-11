@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# ToDo - Probably too verbose, need to refactor the deployment of files bit.
+
 source /etc/profile
 
 timestamp=$(date +"%d%m%Y_%H%M%S");
@@ -20,8 +23,14 @@ cp "/staging/discord-bot-jailor-withsecret.conf" "/etc/supervisor/conf.d/discord
 mv "/app/main.py" "/staging/backup/main_$timestamp.py"
 echo "moved /app/main.py to /staging/backup/main_$timestamp.py"
 
+mv "/app/app_settings.json" "/staging/backup/app_settings_$timestamp.json"
+echo "moved /app/app_settings.json to /staging/backup/app_settings_$timestamp.json"
+
 mv "/staging/main.py" "/app/main.py"
 echo "copied /staging/main.py to /app/main.py"
+
+mv "/staging/app_settings.json" "/app/app_settings.json"
+echo "copied /staging/app_settings.json to /app/app_settings.json"
 
 supervisorctl reload
 echo "reloaded supervisor config"

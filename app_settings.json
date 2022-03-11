@@ -1,0 +1,16 @@
+{
+    "GameCraft": {
+        "channel": "counting",
+        "channelId": 949447509921632286,
+        "role": "@everyone",
+        "sendmessage_permission": "True",
+        "denymessage_permission": "False"
+    },
+    "The Wittle Cafe & Co.": {
+        "channel": "💴-♧-counting",
+        "channelId": 941198380707766272,
+        "role": "Counting",
+        "sendmessage_permission": "True",
+        "denymessage_permission": "False"
+    }
+}
