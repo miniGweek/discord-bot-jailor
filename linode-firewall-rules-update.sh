@@ -63,8 +63,8 @@ linode-cli firewalls rules-update 50400 \
     --inbound "$firewall_rules_inbound" \
     --json --pretty
 
-echo "Sleeping for 20s, allowing firewall rules to take effect"
+echo "Sleeping for 30s, allowing firewall rules to take effect"
 
 if [ "$1" == "addgithub-pip" ]; then
-    sleep 20
+    sleep 30
 fi
