@@ -186,7 +186,7 @@ def convert_string_permissions(permission):
 
 async def log_messages_in_counting_channel(message,config):
     counting_channel = get_counting_channel(message, config['channelId'])
-    if counting_channel != None and message.author.bot != True:
+    if counting_channel != None and message.channel.id == counting_channel.id and message.author.bot != True:
         currentDateTime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         logMessage = '{0} Guild={1} Name={2} Id={3} Nick={4} CountMessage={5}\n'.format(currentDateTime, message.guild.name, message.author.name, message.author.id, message.author.nick, message.content)
         write_to_file('count.log',logMessage)
