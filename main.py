@@ -5,7 +5,16 @@ import os
 import json
 from datetime import datetime
 
-logging.basicConfig(filename='jailor.log', filemode='a', level=logging.INFO,
+app_config = json.load(open('app_settings.json'))
+
+log_path = app_config.get('app_config').get('log').get('path')
+if os.path.isdir(log_path) == False:
+    log_path = os.getcwd();
+
+jailor_log_path = os.path.join(log_path,'jailor.log')
+count_log_path = os.path.join(log_path,'count.log')
+
+logging.basicConfig(filename=jailor_log_path, filemode='a', level=logging.INFO,
                     format='%(asctime)s %(name)s - %(levelname)s - %(message)s')
 logging.warning('This will get logged to a file')
 
@@ -16,7 +25,7 @@ patterns = ['There are \*\*(.+?)/2\*\* guild saves left.',
             'for a total of `(.+?)/2` guild saves.'
             ]
 
-app_config = json.load(open('app_settings.json'))
+
 
 
 @client.event
@@ -192,7 +201,7 @@ async def log_messages_in_counting_channel(message, config):
         currentDateTime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         logMessage = '{} GuildName={}#|#GuildId={}#|#Name={}#|#Id={}#|#Nick={}#|#CountMessage={}\n'.format(
             currentDateTime, message.guild.name, message.guild.id, message.author.name, message.author.id, message.author.nick, message.content)
-        write_to_file('count.log', logMessage)
+        write_to_file(count_log_path, logMessage)
 
 
 def write_to_file(file, msg):
