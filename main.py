@@ -29,11 +29,11 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    guild = message.guild.name
+    guild = str(message.guild.id)
     config_available = guild in app_config
     if config_available == True:
         config = app_config[guild]
-        if message.author == client.user: # If the message is posted by jailor bot, don't do anything
+        if message.author == client.user:  # If the message is posted by jailor bot, don't do anything
             return
         return await process_message(message, config)
     return
@@ -63,8 +63,9 @@ async def process_message(message, config):
             await check_saves_and_lock_channel(message, counting_message, config)
             logging.info('jailor done checking if guildsaves are there')
             return
-    
-    await log_messages_in_counting_channel(message,config)
+
+    await log_messages_in_counting_channel(message, config)
+
 
 async def check_saves_and_lock_channel(message, counting_message, config):
 
@@ -98,11 +99,11 @@ def get_role(roles, name):
         if role.name == name:
             return role
 
+
 async def lock_channel(channel, config):
     lock_permission = convert_string_permissions(
         config['denymessage_permission'])
-    
-        
+
     await channel.send('Guild saves are less than 1. Locking the channel.')
     await channel.set_permissions(get_role(channel.guild.roles,
                                            config['role']),
@@ -184,22 +185,26 @@ def convert_string_permissions(permission):
     elif permission == 'None':
         return None
 
-async def log_messages_in_counting_channel(message,config):
+
+async def log_messages_in_counting_channel(message, config):
     counting_channel = get_counting_channel(message, config['channelId'])
     if counting_channel != None and message.channel.id == counting_channel.id and message.author.bot != True:
         currentDateTime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        logMessage = '{0} Guild={1} Name={2} Id={3} Nick={4} CountMessage={5}\n'.format(currentDateTime, message.guild.name, message.author.name, message.author.id, message.author.nick, message.content)
-        write_to_file('count.log',logMessage)
+        logMessage = '{} GuildName={}#|#GuildId={}#|#Name={}#|#Id={}#|#Nick={}#|#CountMessage={}\n'.format(
+            currentDateTime, message.guild.name, message.guild.id, message.author.name, message.author.id, message.author.nick, message.content)
+        write_to_file('count.log', logMessage)
+
 
 def write_to_file(file, msg):
     # Open a file with access mode 'a'
     file_object = open(file, 'a')
-    logging.info('opened {0} file for writing message {1}'.format(file,msg))
+    logging.info('opened {0} file for writing message {1}'.format(file, msg))
     # Append 'hello' at the end of file
     file_object.write(msg)
     # Close the file
     file_object.close()
     logging.info('closed {0} file after writing message'.format(file))
+
 
 discord_bot_token = os.getenv('DISCORD_BOT_JAILOR_TOKEN')
 client.run(discord_bot_token)

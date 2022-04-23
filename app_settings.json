@@ -1,12 +1,14 @@
 {
-    "GameCraft": {
+    "309229092082024448": {
+        "description": "GameCraft",
         "channel": "counting",
         "channelId": 949447509921632286,
         "role": "@everyone",
         "sendmessage_permission": "True",
         "denymessage_permission": "False"
     },
-    "The Wittle Cafe & Co.": {
+    "917267641368969228": {
+        "description": "The Wittle Cafe & Co.",
         "channel": "💴-♧-counting",
         "channelId": 941198380707766272,
         "role": "Counting",
