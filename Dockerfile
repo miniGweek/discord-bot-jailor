@@ -4,7 +4,10 @@ RUN apk add --update && \
     rm -rf /var/cache/apk/*
 
 WORKDIR /src
-COPY . /src
+
+COPY main.py /src
+COPY requirements.txt /src
+COPY app_settings.json /src
 
 RUN pip install --upgrade pip && \
         pip install -r requirements.txt
