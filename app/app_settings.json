@@ -1,7 +1,7 @@
 {
     "app_config":{
         "log":{
-            "path":"/logs"
+            "path":"logs"
         }        
     },
     "309229092082024448": {

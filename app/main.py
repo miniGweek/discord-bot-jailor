@@ -8,8 +8,7 @@ from datetime import datetime
 app_config = json.load(open('app_settings.json'))
 
 log_path = app_config.get('app_config').get('log').get('path')
-if os.path.isdir(log_path) == False:
-    log_path = os.getcwd();
+log_path=os.path.join(os.getcwd(),log_path)
 
 jailor_log_path = os.path.join(log_path,'jailor.log')
 count_log_path = os.path.join(log_path,'count.log')
