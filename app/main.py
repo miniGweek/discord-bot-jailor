@@ -18,11 +18,15 @@ logging.basicConfig(filename=jailor_log_path, filemode='a', level=logging.INFO,
                     format='%(asctime)s %(name)s - %(levelname)s - %(message)s')
 logging.warning('This will get logged to a file')
 
-client = discord.Client()
+# Setup Discord client with intents
+intents = discord.Intents.default()
+intents.message_content = True
+intents.guild_messages = True
+client = discord.Client(intents=intents)
 
-patterns = ['There are \*\*(.+?)/2\*\* guild saves left.',
-            'Guild Saves: \*\*(.+?)/2\*\*',
-            'for a total of `(.+?)/2` guild saves.'
+patterns = [
+            'Guild Saves: \*\*(\d+)/(\d+)\*\*',
+            'for a total of `([\d.]+)/(\d+)` guild saves'
             ]
 
 
@@ -88,12 +92,12 @@ async def check_saves_and_lock_channel(message, counting_message, config):
     logging.info('jailor result of check the current permission for sending_messages={0}'.format(
         current_send_message_permission))
 
-    if check_saves == False and str(current_send_message_permission) == config['sendmessage_permission']:
+    if check_saves == False and str(current_send_message_permission) in config['sendmessage_permission']:
         logging.info(
             'jailor checked guild saves are not >=1, locking channel'.format(check_saves))
         await lock_channel(counting_channel, config)
         logging.info('jailor locking channel done')
-    elif check_saves == True and str(current_send_message_permission) == config['denymessage_permission']:
+    elif check_saves == True and str(current_send_message_permission) in config['denymessage_permission']:
         logging.info(
             'jailor checked guild saves are >=1, un-locking channel'.format(check_saves))
         await unlock_channel(counting_channel, config)
@@ -181,7 +185,7 @@ def can_send_messages(channel, role):
 
 
 async def check_send_hello(debug, message):
-    if debug and 'j!debug print ' in message.content:
+    if debug and message.content.startswith('j!debug print '):
         printcontent = message.content.split('j!debug print ')[1]
         await message.channel.send('Good bot jailor says :{0}'.format(printcontent))
 

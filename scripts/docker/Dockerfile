@@ -1,4 +1,4 @@
-FROM python:3.10-alpine as build
+FROM python:3.12-alpine as build
 
 RUN apk add --update && \
     rm -rf /var/cache/apk/*

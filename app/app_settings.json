@@ -19,5 +19,21 @@
         "role": "Counting",
         "sendmessage_permission": "True",
         "denymessage_permission": "False"
+    },
+    "985647738857328670":{
+        "description": "Legolas's Server",
+        "channel": "counting",
+        "channelId": 1240592891215220817,
+        "role": "counter",
+        "sendmessage_permission": "True",
+        "denymessage_permission": "False"
+    },
+    "1182200029604220969":{
+        "description": "Sydney's Swaggest",
+        "channel": "counting",
+        "channelId": 1182230096485040209,
+        "role": "Counting",
+        "sendmessage_permission": "True",
+        "denymessage_permission": "False"
     }
 }
