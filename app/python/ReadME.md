@@ -19,7 +19,7 @@ The bot requires the following permissions
 Run the powershell script `build.ps` to build and push to the docker registry
 
 ```PowerShell
- scripts\build.ps1 -tag '0.4'
+ app\python\scripts\build.ps1 -tag '0.4'
 ```
 
 ## Run Docker Image

@@ -6,8 +6,8 @@ $ErrorActionPreference = "Stop"
 # Script current location
 $ScriptPath = $MyInvocation.MyCommand.Path
 $ScriptsFolder = (Split-Path $ScriptPath -Parent)
-$DockerFilePath = "$ScriptsFolder\docker\Dockerfile"
-$AppDir = "$(Split-Path -Parent -Path $ScriptsFolder)\app"
+$AppDir = "$(Split-Path -Parent -Path $ScriptsFolder)"
+$DockerFilePath = "$AppDir \Dockerfile"
 
 try {
     $Repository = "minigweek/discord-bot-jailor"
