@@ -1,0 +1,46 @@
+{
+    "app_config": {
+        "log": {
+            "path": "logs"
+        },
+        "print_command_prefix": "j!print",
+        "purge_command_prefix": "c!server",
+        "member_to_delete": "<fill>",
+        "oldest_first": "True",
+        "bulk_message_limit": 3000,
+        "who_can_run_commands": [
+            "<fill>"
+        ],
+        "purge_search_period": 7,
+        "purge_channels": [
+        ],
+        "skip_purge_channels": [
+            "rules",
+            "announcements",
+            "important-roles",
+            "optional-roles",
+            "welcome",
+            "suggestions-to-the-server",
+            "introduction",
+            "promo-and-self-advertising",
+            "ticket",
+            "vent",
+            "moderator-application",
+            "degen-entrance",
+            "counting-rules",
+            "gaming",
+            "art",
+            "nsfw-art",
+            "nsfw-irl",
+            "nsfw-memes"
+        ],
+        "end_date": "21/05/2024",
+        "start_date": "06/02/2024"
+    },
+    "<fill server id>": {
+        "description": "<fill>"
+    },
+    "<fill server id>": {
+        "description": "<fill>"
+    }
+}
